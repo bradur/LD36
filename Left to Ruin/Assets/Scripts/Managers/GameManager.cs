@@ -141,9 +141,7 @@ public class GameManager : MonoBehaviour
     void LoadLevel(Level level)
     {
         Time.timeScale = 0f;
-        Debug.Log("<b>LEVEL:</b> " + level.MapFile.name);
         world = GameObject.FindGameObjectWithTag("World").GetComponent<WorldManager>();
-        Debug.Log(world);
         float yInterval = -3f;
         //TmxMap map = new TmxMap(level.MapFilePath);
         TmxMap map = new TmxMap(level.MapFile.text, "rnd");
