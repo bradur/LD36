@@ -32,6 +32,7 @@ public class TileManager : MonoBehaviour {
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (GameObject.FindGameObjectsWithTag("TileManager").Length < 1)
         {
             gameObject.tag = "TileManager";

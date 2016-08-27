@@ -23,7 +23,7 @@ public class GenericObject : MonoBehaviour
 
     SingleTile currentTile;
 
-    public void Init(int xPos, int zPos, ObjectType objectType, PropertyDict properties)
+    public void Init(int xPos, int yPos, int zPos, ObjectType objectType, PropertyDict properties)
     {
         this.objectType = objectType;
         this.xPos = xPos;
@@ -34,7 +34,7 @@ public class GenericObject : MonoBehaviour
             ProjectileShooter projectileShooter = GetComponent<ProjectileShooter>();
             projectileShooter.Init((ProjectileHeading)GameManager.IntParseFast(properties["ObjectRotation"]));
         }
-        transform.position = new Vector3(xPos, 0.6f, zPos);
+        transform.position = new Vector3(xPos, yPos, zPos);
         currentTile = TileManager.main.GetTile(xPos, zPos);
         currentTile.AddObject(this);
     }

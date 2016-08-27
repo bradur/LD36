@@ -11,7 +11,8 @@ public enum DialogAction
     MainMenu,
     DismissDialog,
     NextLevel,
-    Restart
+    Restart,
+    GameFinished
 }
 
 public class UIManager : MonoBehaviour
@@ -29,10 +30,13 @@ public class UIManager : MonoBehaviour
 
     private bool dialogIsActive = false;
 
+    private GameObject currentDialog = null;
+
     public static UIManager main;
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (GameObject.FindGameObjectsWithTag("UIManager").Length < 1)
         {
             gameObject.tag = "UIManager";
@@ -67,7 +71,8 @@ public class UIManager : MonoBehaviour
             GameObject newDialogObject = dialogPool.GetObject();
             newDialogObject.SetActive(true);
             GenericDialog newDialog = newDialogObject.GetComponent<GenericDialog>();
-            newDialog.Init(title, text, dialogAction, "BACK TO GAME");
+            newDialog.Init(title, text, dialogAction, dismissMessage);
+            currentDialog = newDialog.gameObject;
         }
     }
 
@@ -75,5 +80,17 @@ public class UIManager : MonoBehaviour
     {
         dialogIsActive = false;
         dialogPool.DestroyObject(dialog);
+    }
+
+    public void ClearDialogs()
+    {
+        if (dialogIsActive)
+        {
+            if(currentDialog != null)
+            {
+                dialogPool.DestroyObject(currentDialog);
+                currentDialog = null;
+            }
+        }
     }
 }

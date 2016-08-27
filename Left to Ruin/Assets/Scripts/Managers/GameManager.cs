@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (GameObject.FindGameObjectsWithTag("GameManager").Length < 1)
         {
             gameObject.tag = "GameManager";
@@ -85,6 +86,16 @@ public class GameManager : MonoBehaviour
         LoadLevel(levels[currentLevel]);
     }
 
+    public void FinishLevel()
+    {
+        UIManager.main.AddDialog(
+            "3rd of October, 1876",
+            "This strange stone pulses under my touch. I shall take it with me and find my way deeper into the ruins.",
+            DialogAction.NextLevel,
+            ""
+        );
+    }
+
     public void GameOver()
     {
         UIManager.main.AddDialog(
@@ -97,7 +108,22 @@ public class GameManager : MonoBehaviour
 
     public void OpenNextLevel()
     {
-
+        UIManager.main.ClearDialogs();
+        currentLevel++;
+        if (currentLevel > levels.Count - 1)
+        {
+            UIManager.main.AddDialog(
+                "21st of December, 1879",
+                "I thought I was lost for sure. But by a magnificent stroke of luck I have succeeded! I will bring with me all these amazing findings and help the world!",
+                DialogAction.GameFinished,
+                ""
+            );
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("game");
+        }
     }
 
     void Start()
@@ -105,13 +131,22 @@ public class GameManager : MonoBehaviour
         LoadLevel(levels[currentLevel]);
     }
 
+    void OnLevelWasLoaded(int level)
+    {
+        if(main == this) { 
+            LoadLevel(levels[currentLevel]);
+        }
+    }
+
     void LoadLevel(Level level)
     {
+        Time.timeScale = 0f;
+        Debug.Log("<b>LEVEL:</b> " + level.MapFile.name);
         world = GameObject.FindGameObjectWithTag("World").GetComponent<WorldManager>();
-        Time.timeScale = 1f;
+        Debug.Log(world);
         float yInterval = -3f;
-        TmxMap map = new TmxMap(level.MapFilePath);
-
+        //TmxMap map = new TmxMap(level.MapFilePath);
+        TmxMap map = new TmxMap(level.MapFile.text, "rnd");
         TileManager.main.Init(map.Width, map.Height);
         for (int i = 0; i < map.Layers.Count; i++)
         {
@@ -156,11 +191,11 @@ public class GameManager : MonoBehaviour
                 {
                     GenericObject genericObject = Instantiate(objectPrefabs[objectType]);
                     genericObject.transform.parent = world.transform;
-                    genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
+                    genericObject.Init((int)tmxObject.X / tileSize, (int)objectPrefabs[objectType].transform.position.y, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
                 }
             }
         }
-
+        Time.timeScale = 1f;
     }
 
     public void SpawnPlayer(int x, int z)
@@ -170,7 +205,9 @@ public class GameManager : MonoBehaviour
             player = Instantiate(playerPrefab);
             player.transform.SetParent(world.transform, false);
             player.Init(x, z);
-        } else
+            world.CameraFollower.SetTarget(player.transform);
+        }
+        else
         {
             Debug.Log("<b>warning:</b> trying to duplicate player!");
         }

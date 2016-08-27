@@ -12,6 +12,10 @@ public class Level : MonoBehaviour
     private string mapFilePath;
 
     [SerializeField]
+    private TextAsset mapFile;
+    public TextAsset MapFile { get { return mapFile; } }
+
+    [SerializeField]
     private Material mapMaterial;
     public Material MapMaterial { get { return mapMaterial; } }
 

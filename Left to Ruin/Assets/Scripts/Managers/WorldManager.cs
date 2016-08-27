@@ -10,5 +10,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private Transform wallContainer;
     public Transform WallContainer { get { return wallContainer; } }
-
+    [SerializeField]
+    private Camera2DFollow cameraFollower;
+    public Camera2DFollow CameraFollower { get { return cameraFollower; } }
 }

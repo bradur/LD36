@@ -51,6 +51,11 @@ public class GenericDialog : MonoBehaviour
             dismissButton.SetActive(false);
             exitToMainMenuButton.SetActive(true);
             restartLevelButton.SetActive(true);
+        } else if(dialogAction == DialogAction.GameFinished)
+        {
+            exitToMainMenuButton.SetActive(true);
+            dismissButton.SetActive(false);
+            restartLevelButton.SetActive(true);
         }
         animator.SetTrigger("Show");
         Time.timeScale = 0f;

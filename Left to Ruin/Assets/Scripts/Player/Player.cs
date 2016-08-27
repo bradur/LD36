@@ -85,6 +85,9 @@ public class Player : MonoBehaviour
                     } else if(tileObject.ObjectType == ObjectType.ProjectileShooter)
                     {
                         return false;
+                    } else if (tileObject.ObjectType == ObjectType.LevelEnd)
+                    {
+                        GameManager.main.FinishLevel();
                     }
                 }
             }
