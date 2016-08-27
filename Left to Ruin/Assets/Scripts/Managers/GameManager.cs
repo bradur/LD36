@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using TiledSharp;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager main;
     [SerializeField]
@@ -16,8 +17,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private GenericObject[] objectPrefabs;
 
-    [SerializeField]
-    private Transform world;
+    private WorldManager world;
 
     [SerializeField]
     private Transform projectileContainer;
@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private List<Level> levels;
+
+    [SerializeField]
+    private GameObject wallBlockPrefab;
+
+    [SerializeField]
+    private Player playerPrefab;
+    private Player player;
+    public Player Player { get { return player; } }
 
     private int currentLevel = 0;
 
@@ -41,8 +49,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private int tileSize = 64;
 
-    [SerializeField]
-    private Player player;
+
 
     [SerializeField]
     private List<Item> items = new List<Item>();
@@ -64,7 +71,8 @@ public class GameManager : MonoBehaviour {
         {
             gameObject.tag = "GameManager";
             main = this;
-        } else
+        }
+        else
         {
             Destroy(gameObject);
         }
@@ -99,36 +107,73 @@ public class GameManager : MonoBehaviour {
 
     void LoadLevel(Level level)
     {
+        world = GameObject.FindGameObjectWithTag("World").GetComponent<WorldManager>();
         Time.timeScale = 1f;
         float yInterval = -3f;
         TmxMap map = new TmxMap(level.MapFilePath);
-        
+
         TileManager.main.Init(map.Width, map.Height);
-        player.Init(5, 5);
-        for(int i = 0; i < map.Layers.Count; i++)
+        for (int i = 0; i < map.Layers.Count; i++)
         {
             TmxLayer layer = map.Layers[i];
             TileType tileType = (TileType)GameManager.IntParseFast(layer.Properties["TileType"]);
+            if (tileType == TileType.Wall)
+            {
+                for (int x = 0; x < map.Width; x++)
+                {
+                    for (int z = 0; z < map.Height; z++)
+                    {
+                        int tileId = layer.Tiles[(map.Height - z - 1) * map.Width + x].Gid - 1;
+                        if (tileId == -1)
+                        {
+                            continue;
+                        }
+                        GameObject wallBlock = (GameObject)Instantiate(wallBlockPrefab, new Vector3(x, wallBlockPrefab.transform.position.y, z), Quaternion.identity);
+                        wallBlock.transform.SetParent(world.WallContainer, false);
+                    }
+                }
+            }
+
             TiledMesh tiledMesh = Instantiate(tiledMeshPrefab);
-            if(tileType == TileType.Hole)
+            if (tileType == TileType.Hole)
             {
                 tiledMesh.transform.position = new Vector3(tiledMesh.transform.position.x, tiledMesh.transform.position.y + yInterval, tiledMesh.transform.position.z);
                 tiledMesh.gameObject.tag = "Hole";
             }
-            tiledMesh.transform.parent = world;
+            tiledMesh.transform.parent = world.transform;
             tiledMesh.Init(map.Width, map.Height, layer, level.MapMaterial);
         }
-        foreach(TmxObjectGroup group in map.ObjectGroups)
+        foreach (TmxObjectGroup group in map.ObjectGroups)
         {
-            foreach(TmxObjectGroup.TmxObject tmxObject in group.Objects)
+            foreach (TmxObjectGroup.TmxObject tmxObject in group.Objects)
             {
                 int objectType = GameManager.IntParseFast(tmxObject.Properties["ObjectType"]);
-                GenericObject genericObject = Instantiate(objectPrefabs[objectType]);
-                genericObject.transform.parent = world;
-                genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
+                if ((ObjectType)objectType == ObjectType.PlayerSpawn)
+                {
+                    SpawnPlayer((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize);
+                }
+                else
+                {
+                    GenericObject genericObject = Instantiate(objectPrefabs[objectType]);
+                    genericObject.transform.parent = world.transform;
+                    genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
+                }
             }
         }
 
+    }
+
+    public void SpawnPlayer(int x, int z)
+    {
+        if (player == null)
+        {
+            player = Instantiate(playerPrefab);
+            player.transform.SetParent(world.transform, false);
+            player.Init(x, z);
+        } else
+        {
+            Debug.Log("<b>warning:</b> trying to duplicate player!");
+        }
     }
 
     public static int IntParseFast(string value)
@@ -136,13 +181,13 @@ public class GameManager : MonoBehaviour {
         int result = 0;
         try
         {
-            for(int i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length; i++)
             {
                 char letter = value[i];
                 result = 10 * result + (letter - 48);
             }
         }
-        catch(System.NullReferenceException)
+        catch (System.NullReferenceException)
         {
             result = -1;
         }

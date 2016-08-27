@@ -34,7 +34,7 @@ public class GenericObject : MonoBehaviour
             ProjectileShooter projectileShooter = GetComponent<ProjectileShooter>();
             projectileShooter.Init((ProjectileHeading)GameManager.IntParseFast(properties["ObjectRotation"]));
         }
-        transform.position = new Vector3(xPos, 0.75f, zPos);
+        transform.position = new Vector3(xPos, 0.6f, zPos);
         currentTile = TileManager.main.GetTile(xPos, zPos);
         currentTile.AddObject(this);
     }

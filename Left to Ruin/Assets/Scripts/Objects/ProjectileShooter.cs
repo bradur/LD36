@@ -53,7 +53,7 @@ public class ProjectileShooter : MonoBehaviour {
     {
         Projectile newProjectile = Instantiate(projectilePrefab);
         newProjectile.transform.parent = GameManager.main.ProjectileContainer;
-        newProjectile.transform.position = transform.position + transform.forward;
+        newProjectile.transform.position = transform.position + (transform.forward * 2);
         newProjectile.Init(speed, projectileHeading);
     }
 

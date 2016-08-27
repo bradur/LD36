@@ -82,6 +82,9 @@ public class Player : MonoBehaviour
                         {
                             return false;
                         }
+                    } else if(tileObject.ObjectType == ObjectType.ProjectileShooter)
+                    {
+                        return false;
                     }
                 }
             }

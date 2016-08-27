@@ -20,6 +20,7 @@ public class Camera2DFollow : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        target = GameManager.main.Player.transform;
         m_LastTargetPosition = target.position;
         m_OffsetZ = (cameraTransform.position - target.position).z;
         originalY = cameraTransform.position.y;

@@ -18,7 +18,10 @@ public enum ObjectType
     MovableBlock,
     ProjectileShooter,
     MovableTreasure,
-    LockedDoor
+    LockedDoor,
+    PlayerSpawn,
+    StepOnButton,
+    LevelEnd
 }
 
 public class TileManager : MonoBehaviour {
