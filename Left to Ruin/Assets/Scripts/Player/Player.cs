@@ -53,15 +53,28 @@ public class Player : MonoBehaviour
             {
                 if (tile.TileType == TileType.Wall)
                 {
-                    Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=red>WALL</color>");
+                    //Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=red>WALL</color>");
                     return false;
                 }
                 GenericObject tileObject = tile.TileObject;
                 if (tileObject != null)
                 {
-                    if (tileObject.ObjectType == ObjectType.MovableBlock)
+                    if (tileObject.Movable)
                     {
                         if (!tileObject.Move(x, z))
+                        {
+                            return false;
+                        }
+                    }
+                    else if (tileObject.ObjectType == ObjectType.MovableTreasure)
+                    {
+                        GameManager.main.GainItem(tileObject.GetComponent<MovableTreasure>().GetItem());
+                        tileObject.RemoveFromTile();
+                        Destroy(tileObject.gameObject);
+                    }
+                    else if (tileObject.ObjectType == ObjectType.LockedDoor)
+                    {
+                        if (!tileObject.GetComponent<LockedDoor>().UnlockDoor(GameManager.main.Items))
                         {
                             return false;
                         }
@@ -73,7 +86,7 @@ public class Player : MonoBehaviour
             {
                 falling = true;
             }
-            Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=green>EMPTY</color>");
+            //Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=green>EMPTY</color>");
             transform.position = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
             xPos = (int)transform.position.x;
             zPos = (int)transform.position.z;

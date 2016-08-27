@@ -105,15 +105,6 @@ public class TiledMesh : MonoBehaviour
                 DrawVertex(index + 3, currentPosition, 0, unitSize);
                 AssignUv(index, tiles[tileId], tileSize);
                 index += 6;
-                if(tileType == TileType.Wall) { 
-                    //Debug.Log("<b>add:</b> ["+x+" , "+z+"] <color=red>WALL</color>");
-                } else if (tileType == TileType.Floor)
-                {
-                    //Debug.Log("<b>add:</b> [" + x + " , " + z + "] <color=green>FLOOR</color>");
-                } else
-                {
-                    Debug.Log("<b><color=red>THIS SHOULD NOT HAPPEN</color></b> (" + tileType + ")");
-                }
                 TileManager.main.AddTile(x, z, tileType);
 
             }

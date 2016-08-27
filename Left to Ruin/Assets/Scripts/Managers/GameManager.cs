@@ -44,6 +44,20 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private Player player;
 
+    [SerializeField]
+    private List<Item> items = new List<Item>();
+    public List<Item> Items { get { return items; } }
+
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+    }
+
+    public void GainItem(Item item)
+    {
+        items.Add(item);
+    }
+
     void Awake()
     {
         if (GameObject.FindGameObjectsWithTag("GameManager").Length < 1)

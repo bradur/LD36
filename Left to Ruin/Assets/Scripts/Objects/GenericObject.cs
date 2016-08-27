@@ -17,6 +17,9 @@ public class GenericObject : MonoBehaviour
     public int XPos { get { return xPos; } }
     public int ZPos { get { return zPos; } }
     bool falling = false;
+    [SerializeField]
+    private bool movable = false;
+    public bool Movable { get { return movable; } }
 
     SingleTile currentTile;
 
@@ -25,7 +28,7 @@ public class GenericObject : MonoBehaviour
         this.objectType = objectType;
         this.xPos = xPos;
         this.zPos = zPos;
-        if(this.objectType == ObjectType.ProjectileShooter)
+        if (this.objectType == ObjectType.ProjectileShooter)
         {
 
             ProjectileShooter projectileShooter = GetComponent<ProjectileShooter>();
@@ -38,7 +41,7 @@ public class GenericObject : MonoBehaviour
 
     public bool Move(int x, int z)
     {
-        if (objectType == ObjectType.MovableBlock && !falling)
+        if (movable && !falling)
         {
             int newXPos = (int)transform.position.x + x;
             int newZPos = (int)transform.position.z + z;
@@ -71,9 +74,23 @@ public class GenericObject : MonoBehaviour
         return false;
     }
 
+    public void MakeUnMovable()
+    {
+        movable = false;
+    }
+
+    public void RemoveFromTile()
+    {
+        if (currentTile != null)
+        {
+            currentTile.RemoveObject();
+            currentTile = null;
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Hole")
+        if (collision.gameObject.tag == "Hole")
         {
             gameObject.layer = LayerMask.GetMask("Default");
             currentTile.RemoveObject();

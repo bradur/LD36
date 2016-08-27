@@ -16,7 +16,9 @@ public enum ObjectType
 {
     None,
     MovableBlock,
-    ProjectileShooter
+    ProjectileShooter,
+    MovableTreasure,
+    LockedDoor
 }
 
 public class TileManager : MonoBehaviour {
@@ -83,7 +85,7 @@ public class SingleTile
     {
         if(this.tileObject == null)
         {
-            Debug.Log("ERROR: " + tileObject.name + " already contains an object.");
+            Debug.Log("<b>warning:</b> " + tileObject.name + " already contains an object.");
         }
         this.tileObject = tileObject;
     }
