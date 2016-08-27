@@ -14,12 +14,18 @@ public class GameManager : MonoBehaviour {
     private TiledMesh tiledMeshPrefab;
 
     [SerializeField]
+    private GenericObject genericObjectPrefab;
+
+    [SerializeField]
     private Transform world;
 
     [SerializeField]
     private List<Level> levels;
 
     private int currentLevel = 0;
+
+    [SerializeField]
+    private int tileSize = 64;
 
     [SerializeField]
     private Player player;
@@ -51,6 +57,15 @@ public class GameManager : MonoBehaviour {
             TiledMesh tiledMesh = Instantiate(tiledMeshPrefab);
             tiledMesh.transform.parent = world;
             tiledMesh.Init(map.Width, map.Height, layer, level.MapMaterial);
+        }
+        foreach(TmxObjectGroup group in map.ObjectGroups)
+        {
+            foreach(TmxObjectGroup.TmxObject tmxObject in group.Objects)
+            {
+                GenericObject genericObject = Instantiate(genericObjectPrefab);
+                genericObject.transform.parent = world;
+                genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)GameManager.IntParseFast(tmxObject.Properties["ObjectType"]));
+            }
         }
 
     }

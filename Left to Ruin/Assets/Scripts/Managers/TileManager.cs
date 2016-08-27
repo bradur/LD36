@@ -12,6 +12,12 @@ public enum TileType {
     Hole
 };
 
+public enum ObjectType
+{
+    None,
+    MovableBlock
+}
+
 public class TileManager : MonoBehaviour {
 
     public static TileManager main;
@@ -45,7 +51,7 @@ public class TileManager : MonoBehaviour {
         tiles[tileCountX * z + x] = new SingleTile(x, z, tileType);
     }
 
-    public void AddObjectToTile(int x, int z, GameObject newObj)
+    public void AddObjectToTile(int x, int z, GenericObject newObj)
     {
         tiles[tileCountX * z + x].AddObject(newObj);
     }
@@ -62,8 +68,8 @@ public class SingleTile
     private int z;
     private TileType tileType;
     public TileType TileType { get { return tileType; } }
-    private GameObject tileObject;
-    public GameObject TileObject { get { return tileObject; } }
+    private GenericObject tileObject = null;
+    public GenericObject TileObject { get { return tileObject; } }
 
     public SingleTile(int x, int z, TileType tileType)
     {
@@ -72,8 +78,17 @@ public class SingleTile
         this.tileType = tileType;
     }
 
-    public void AddObject(GameObject tileObject)
+    public void AddObject(GenericObject tileObject)
     {
+        if(this.tileObject == null)
+        {
+            Debug.Log("ERROR: " + tileObject.name + " already contains an object.");
+        }
         this.tileObject = tileObject;
+    }
+
+    public void RemoveObject()
+    {
+        this.tileObject = null;
     }
 }

@@ -39,20 +39,35 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Move(int x, int z)
+    bool Move(int x, int z)
     {
-        int newXpos = (int)transform.position.x + x;
-        int newZpos = (int)transform.position.z + z;
-        
-        SingleTile tile = TileManager.main.GetTile(newXpos, newZpos);
-        if(tile != null && tile.TileType == TileType.Wall)
+        int newXPos = (int)transform.position.x + x;
+        int newZPos = (int)transform.position.z + z;
+
+        SingleTile tile = TileManager.main.GetTile(newXPos, newZPos);
+        if (tile != null)
         {
-            Debug.Log("<b>move:</b> [" + newXpos + ", " + newZpos + "] <color=red>WALL</color>");
-            return;
+            if (tile.TileType == TileType.Wall)
+            {
+                Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=red>WALL</color>");
+                return false;
+            }
+            GenericObject tileObject = tile.TileObject;
+            if (tileObject != null)
+            {
+                if(tileObject.ObjectType == ObjectType.MovableBlock)
+                {
+                    if (!tileObject.Move(x, z))
+                    {
+                        return false;
+                    }
+                }
+            }
         }
-        Debug.Log("<b>move:</b> [" + newXpos + ", " + newZpos + "] <color=green>EMPTY</color>");
+        Debug.Log("<b>move:</b> [" + newXPos + ", " + newZPos + "] <color=green>EMPTY</color>");
         transform.position = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
         xPos = (int)transform.position.x;
         zPos = (int)transform.position.z;
+        return true;
     }
 }
