@@ -14,14 +14,15 @@ public class Camera2DFollow : MonoBehaviour
     private Vector3 m_CurrentVelocity;
     private Vector3 m_LookAheadPos;
     private float originalY;
+    [SerializeField]
+    private Transform cameraTransform;
 
     // Use this for initialization
     private void Start()
     {
         m_LastTargetPosition = target.position;
-        m_OffsetZ = (transform.position - target.position).z;
-        transform.parent = null;
-        originalY = transform.position.y;
+        m_OffsetZ = (cameraTransform.position - target.position).z;
+        originalY = cameraTransform.position.y;
     }
 
 
@@ -43,10 +44,10 @@ public class Camera2DFollow : MonoBehaviour
         }
 
         Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
-        Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
+        Vector3 newPos = Vector3.SmoothDamp(cameraTransform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
         newPos.y = originalY;
 
-        transform.position = newPos;
+        cameraTransform.position = newPos;
 
         m_LastTargetPosition = target.position;
     }

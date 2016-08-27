@@ -15,7 +15,8 @@ public enum TileType {
 public enum ObjectType
 {
     None,
-    MovableBlock
+    MovableBlock,
+    ProjectileShooter
 }
 
 public class TileManager : MonoBehaviour {

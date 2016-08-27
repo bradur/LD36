@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64" nextobjectid="12">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64" nextobjectid="16">
  <tileset firstgid="1" name="Floor" tilewidth="64" tileheight="64" tilecount="16" columns="4">
   <image source="../Images/tilesheet.png" width="256" height="256"/>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="20">
+ <layer name="Tile Layer 1" width="20" height="20" visible="0">
   <properties>
    <property name="TileType" value="1"/>
   </properties>
@@ -410,7 +410,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Tile Layer 2" width="20" height="20">
+ <layer name="Tile Layer 2" width="20" height="20" visible="0">
   <properties>
    <property name="TileType" value="2"/>
   </properties>
@@ -823,9 +823,28 @@
     <property name="ObjectType" type="int" value="1"/>
    </properties>
   </object>
-  <object id="11" gid="15" x="960" y="704" width="64" height="64">
+  <object id="11" gid="15" x="1152" y="1216" width="64" height="64">
    <properties>
-    <property name="ObjectType" type="int" value="1"/>
+    <property name="ObjectRotation" type="int" value="4"/>
+    <property name="ObjectType" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="13" gid="15" x="64" y="1216" width="64" height="64">
+   <properties>
+    <property name="ObjectRotation" type="int" value="1"/>
+    <property name="ObjectType" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="14" gid="15" x="64" y="128" width="64" height="64">
+   <properties>
+    <property name="ObjectRotation" type="int" value="2"/>
+    <property name="ObjectType" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="15" gid="15" x="1152" y="128" width="64" height="64">
+   <properties>
+    <property name="ObjectRotation" type="int" value="3"/>
+    <property name="ObjectType" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>

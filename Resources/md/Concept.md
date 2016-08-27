@@ -18,3 +18,6 @@ Rolling Ball
 Button (stand-on)
 - Does something WHEN you(or a block) stand on it
 - Has a sign next to it showing what it does
+
+Arrow-Shooter
+- Shoots deadly arrows

@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using System.Collections;
+using TiledSharp;
 
 public class GenericObject : MonoBehaviour
 {
@@ -18,41 +19,51 @@ public class GenericObject : MonoBehaviour
 
     SingleTile currentTile;
 
-    public void Init(int xPos, int zPos, ObjectType objectType)
+    public void Init(int xPos, int zPos, ObjectType objectType, PropertyDict properties)
     {
         this.objectType = objectType;
         this.xPos = xPos;
         this.zPos = zPos;
-        transform.position = new Vector3(xPos, 0f, zPos);
-        Debug.Log(xPos + ", " + ZPos);
+        if(this.objectType == ObjectType.ProjectileShooter)
+        {
+
+            ProjectileShooter projectileShooter = GetComponent<ProjectileShooter>();
+            projectileShooter.Init((ProjectileHeading)GameManager.IntParseFast(properties["ObjectRotation"]));
+        }
+        transform.position = new Vector3(xPos, 0.75f, zPos);
         currentTile = TileManager.main.GetTile(xPos, zPos);
         currentTile.AddObject(this);
     }
 
     public bool Move(int x, int z)
     {
-        int newXPos = (int)transform.position.x + x;
-        int newZPos = (int)transform.position.z + z;
-        SingleTile tile = TileManager.main.GetTile(newXPos, newZPos);
-        if (tile != null)
+        if (objectType == ObjectType.MovableBlock)
         {
-            if (tile.TileType == TileType.Wall)
+            int newXPos = (int)transform.position.x + x;
+            int newZPos = (int)transform.position.z + z;
+            SingleTile tile = TileManager.main.GetTile(newXPos, newZPos);
+            if (tile != null)
             {
-                Debug.Log("<b>blockmove:</b> [" + newXPos + ", " + newZPos + "] <color=red>WALL</color>");
-                return false;
+                if (tile.TileType == TileType.Wall)
+                {
+                    Debug.Log("<b>blockmove:</b> [" + newXPos + ", " + newZPos + "] <color=red>WALL</color>");
+                    return false;
+                }
+                if (tile.TileObject != null)
+                {
+                    Debug.Log("<b>blockmove:</b> [" + newXPos + ", " + newZPos + "] <color=red>ANOTHER OBJECT</color>");
+                    return false;
+                }
             }
-            if (tile.TileObject != null)
-            {
-                Debug.Log("<b>blockmove:</b> [" + newXPos + ", " + newZPos + "] <color=red>ANOTHER OBJECT</color>");
-                return false;
-            }
+
+            tile.AddObject(this);
+            currentTile.RemoveObject();
+            currentTile = tile;
+            transform.position = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+            xPos = (int)transform.position.x;
+            zPos = (int)transform.position.z;
+            return true;
         }
-        tile.AddObject(this);
-        currentTile.RemoveObject();
-        currentTile = tile;
-        transform.position = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
-        xPos = (int)transform.position.x;
-        zPos = (int)transform.position.z;
-        return true;
+        return false;
     }
 }

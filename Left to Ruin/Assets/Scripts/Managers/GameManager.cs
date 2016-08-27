@@ -14,15 +14,29 @@ public class GameManager : MonoBehaviour {
     private TiledMesh tiledMeshPrefab;
 
     [SerializeField]
-    private GenericObject genericObjectPrefab;
+    private GenericObject[] objectPrefabs;
 
     [SerializeField]
     private Transform world;
 
     [SerializeField]
+    private Transform projectileContainer;
+    public Transform ProjectileContainer { get { return projectileContainer; } }
+
+    [SerializeField]
     private List<Level> levels;
 
     private int currentLevel = 0;
+
+    private static int[] rotations = new int[] {
+        -1, // None
+        0,
+        90,
+        180,
+        270
+    };
+
+    public static int[] Rotations { get { return rotations; } }
 
     [SerializeField]
     private int tileSize = 64;
@@ -51,7 +65,7 @@ public class GameManager : MonoBehaviour {
     {
         TmxMap map = new TmxMap(level.MapFilePath);
         TileManager.main.Init(map.Width, map.Height);
-        player.Init(2, 2);
+        player.Init(5, 5);
         foreach(TmxLayer layer in map.Layers)
         {
             TiledMesh tiledMesh = Instantiate(tiledMeshPrefab);
@@ -62,9 +76,10 @@ public class GameManager : MonoBehaviour {
         {
             foreach(TmxObjectGroup.TmxObject tmxObject in group.Objects)
             {
-                GenericObject genericObject = Instantiate(genericObjectPrefab);
+                int objectType = GameManager.IntParseFast(tmxObject.Properties["ObjectType"]);
+                GenericObject genericObject = Instantiate(objectPrefabs[objectType]);
                 genericObject.transform.parent = world;
-                genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)GameManager.IntParseFast(tmxObject.Properties["ObjectType"]));
+                genericObject.Init((int)tmxObject.X / tileSize, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
             }
         }
 
