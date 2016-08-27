@@ -43,6 +43,10 @@ public class Player : MonoBehaviour
 
     bool Move(int x, int z)
     {
+        if (Time.timeScale < 1f)
+        {
+            return false;
+        }
         if (!falling)
         {
             int newXPos = (int)transform.position.x + x;
@@ -97,7 +101,7 @@ public class Player : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("You have died!");
+        GameManager.main.GameOver();
     }
 
     void OnCollisionEnter(Collision collision)

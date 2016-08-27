@@ -3,9 +3,9 @@
 // Author : bradur
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using TiledSharp;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -70,6 +70,28 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("game");
+        LoadLevel(levels[currentLevel]);
+    }
+
+    public void GameOver()
+    {
+        UIManager.main.AddDialog(
+            "2nd of September, 1877",
+            "I go to my death with a restless mind - there is still so much I don't know about this place!",
+            DialogAction.Restart,
+            ""
+        );
+    }
+
+    public void OpenNextLevel()
+    {
+
+    }
+
     void Start()
     {
         LoadLevel(levels[currentLevel]);
@@ -77,6 +99,7 @@ public class GameManager : MonoBehaviour {
 
     void LoadLevel(Level level)
     {
+        Time.timeScale = 1f;
         float yInterval = -3f;
         TmxMap map = new TmxMap(level.MapFilePath);
         

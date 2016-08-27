@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public enum DialogAction
 {
     None,
-    Quit,
     MainMenu,
     DismissDialog,
-    NextLevel
+    NextLevel,
+    Restart
 }
 
 public class UIManager : MonoBehaviour
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             Debug.Log("Escape!");
-            AddDialog("8th of August, 1877", "I feel I can go no longer. It is time for me to rest.", DialogAction.Quit, "BACK TO GAME");
+            AddDialog("8th of August, 1877", "I feel I can go no longer. It is time for me to rest.", DialogAction.MainMenu, "BACK TO GAME");
         }
     }
 

@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
-public class GenericDialog : MonoBehaviour {
+public class GenericDialog : MonoBehaviour
+{
 
     [SerializeField]
     private Animator animator;
@@ -17,8 +18,6 @@ public class GenericDialog : MonoBehaviour {
     private Text txtMessage;
 
     [SerializeField]
-    private GameObject quitButton;
-    [SerializeField]
     private GameObject exitToMainMenuButton;
     [SerializeField]
     private GameObject dismissButton;
@@ -26,33 +25,50 @@ public class GenericDialog : MonoBehaviour {
     private Text txtDismissButton;
     [SerializeField]
     private GameObject nextLevelButton;
+    [SerializeField]
+    private GameObject restartLevelButton;
 
     public void Init(string title, string message, DialogAction dialogAction, string dismissMessage)
     {
         txtTitle.text = title;
         txtMessage.text = message;
-        quitButton.SetActive(false);
         dismissButton.SetActive(true);
         txtDismissButton.text = dismissMessage;
         exitToMainMenuButton.SetActive(false);
         nextLevelButton.SetActive(false);
-        if (dialogAction == DialogAction.Quit)
-        {
-            quitButton.SetActive(true);
-        } else if(dialogAction == DialogAction.MainMenu)
+        restartLevelButton.SetActive(false);
+        if (dialogAction == DialogAction.MainMenu)
         {
             exitToMainMenuButton.SetActive(true);
-        } else if (dialogAction == DialogAction.NextLevel)
+        }
+        else if (dialogAction == DialogAction.NextLevel)
         {
             dismissButton.SetActive(false);
             nextLevelButton.SetActive(true);
         }
+        else if (dialogAction == DialogAction.Restart)
+        {
+            dismissButton.SetActive(false);
+            exitToMainMenuButton.SetActive(true);
+            restartLevelButton.SetActive(true);
+        }
         animator.SetTrigger("Show");
+        Time.timeScale = 0f;
     }
 
     public void GoToMainMenu()
     {
         UIManager.main.OpenMainMenu();
+    }
+
+    public void OpenNextLevel()
+    {
+        GameManager.main.OpenNextLevel();
+    }
+
+    public void RestartLevel()
+    {
+        GameManager.main.RestartLevel();
     }
 
     public void Dismiss()
@@ -62,6 +78,7 @@ public class GenericDialog : MonoBehaviour {
 
     public void GoBackToPool()
     {
+        Time.timeScale = 1f;
         animator.ResetTrigger("Hide");
         animator.ResetTrigger("Show");
         UIManager.main.DestroyDialog(gameObject);
