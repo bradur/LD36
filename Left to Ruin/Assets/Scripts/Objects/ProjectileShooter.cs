@@ -14,9 +14,15 @@ public class ProjectileShooter : MonoBehaviour {
     [SerializeField]
     [Range(0.5f, 5f)]
     private float projectileInterval = 2f;
+
+    [SerializeField]
+    [Range(0f, 20f)]
+    private float firstShotTimer = 2f;
+    private bool shotFired = false;
+
     private float timer = 0f;
     [SerializeField]
-    [Range(0.5f, 5f)]
+    [Range(0.5f, 25f)]
     private float speed = 2f;
 
     private ProjectileHeading projectileHeading;
@@ -24,7 +30,13 @@ public class ProjectileShooter : MonoBehaviour {
     void Update()
     {
         timer += Time.deltaTime;
-        if(timer > projectileInterval)
+        if (!shotFired && timer > firstShotTimer)
+        {
+            Shoot();
+            shotFired = true;
+            timer = 0f;
+        }
+        else if(timer > projectileInterval)
         {
             Shoot();
             timer = 0f;

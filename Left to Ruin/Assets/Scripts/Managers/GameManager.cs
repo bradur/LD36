@@ -63,12 +63,21 @@ public class GameManager : MonoBehaviour {
 
     void LoadLevel(Level level)
     {
+        float yInterval = -3f;
         TmxMap map = new TmxMap(level.MapFilePath);
+        
         TileManager.main.Init(map.Width, map.Height);
         player.Init(5, 5);
-        foreach(TmxLayer layer in map.Layers)
+        for(int i = 0; i < map.Layers.Count; i++)
         {
+            TmxLayer layer = map.Layers[i];
+            TileType tileType = (TileType)GameManager.IntParseFast(layer.Properties["TileType"]);
             TiledMesh tiledMesh = Instantiate(tiledMeshPrefab);
+            if(tileType == TileType.Hole)
+            {
+                tiledMesh.transform.position = new Vector3(tiledMesh.transform.position.x, tiledMesh.transform.position.y + yInterval, tiledMesh.transform.position.z);
+                tiledMesh.gameObject.tag = "Hole";
+            }
             tiledMesh.transform.parent = world;
             tiledMesh.Init(map.Width, map.Height, layer, level.MapMaterial);
         }

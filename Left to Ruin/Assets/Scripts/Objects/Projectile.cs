@@ -14,7 +14,8 @@ public enum ProjectileHeading
     West
 }
 
-public class Projectile : MonoBehaviour {
+public class Projectile : MonoBehaviour
+{
 
     [SerializeField]
     private Rigidbody rb;
@@ -25,7 +26,12 @@ public class Projectile : MonoBehaviour {
     public void Init(float speed, ProjectileHeading projectileHeading)
     {
         this.projectileHeading = projectileHeading;
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, GameManager.Rotations[(int)projectileHeading] , transform.eulerAngles.z);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, GameManager.Rotations[(int)projectileHeading], transform.eulerAngles.z);
         rb.velocity = transform.forward * speed;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
     }
 }
