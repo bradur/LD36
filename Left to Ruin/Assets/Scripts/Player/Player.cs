@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     public int ZPos { get { return zPos; } }
 
     private bool falling = false;
+    float timeToFall = 0.2f;
+    bool fallCheckDone = false;
+    float timer;
 
     public void Init(int x, int z)
     {
@@ -23,21 +26,43 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (falling && !fallCheckDone)
+        {
+            timer += Time.deltaTime;
+            if(timer > timeToFall)
+            {
+                SoundManager.main.PlaySound(SoundClip.PlayerFall);
+                timer = 0f;
+                fallCheckDone = true;
+            }
+        }
         if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
         {
-            Move(0, 1);
+            if (!Move(0, 1))
+            {
+                SoundManager.main.PlaySound(SoundClip.CantMove);
+            }
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
         {
-            Move(0, -1);
+            if (!Move(0, -1))
+            {
+                SoundManager.main.PlaySound(SoundClip.CantMove);
+            }
         }
         else if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
         {
-            Move(-1, 0);
+            if(!Move(-1, 0))
+            {
+                SoundManager.main.PlaySound(SoundClip.CantMove);
+            }
         }
         else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
         {
-            Move(1, 0);
+            if(!Move(1, 0))
+            {
+                SoundManager.main.PlaySound(SoundClip.CantMove);
+            }
         }
     }
 
@@ -69,6 +94,14 @@ public class Player : MonoBehaviour
                         {
                             return false;
                         }
+                        if (tileObject.ObjectType == ObjectType.MovableBlock)
+                        {
+                            SoundManager.main.PlaySound(SoundClip.MoveBlock);
+                        }
+                        else
+                        {
+                            SoundManager.main.PlaySound(SoundClip.MoveTreasure);
+                        }
                     }
                     else if (
                         tileObject.ObjectType == ObjectType.MovableTreasureRed ||
@@ -77,6 +110,7 @@ public class Player : MonoBehaviour
                     )
                     {
                         GameManager.main.GainItem(tileObject.GetComponent<MovableTreasure>().GetItem());
+                        SoundManager.main.PlaySound(SoundClip.GainItem);
                         tileObject.RemoveFromTile();
                         Destroy(tileObject.gameObject);
                     }
@@ -89,12 +123,16 @@ public class Player : MonoBehaviour
                         {
                             return false;
                         }
+                        SoundManager.main.PlaySound(SoundClip.UnlockDoor);
                         tileObject.RemoveFromTile();
-                    } else if(tileObject.ObjectType == ObjectType.ProjectileShooter)
+                    }
+                    else if (tileObject.ObjectType == ObjectType.ProjectileShooter)
                     {
                         return false;
-                    } else if (tileObject.ObjectType == ObjectType.LevelEnd)
+                    }
+                    else if (tileObject.ObjectType == ObjectType.LevelEnd)
                     {
+                        SoundManager.main.PlaySound(SoundClip.LevelEnd);
                         GameManager.main.FinishLevel();
                     }
                 }
@@ -121,6 +159,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Projectile")
         {
+            SoundManager.main.PlaySound(SoundClip.PlayerHit);
             Die();
         }
         else if (collision.gameObject.tag == "Hole")
@@ -130,6 +169,7 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.tag == "MovableBlock")
         {
             falling = false;
+            timer = 0f;
         }
     }
 }

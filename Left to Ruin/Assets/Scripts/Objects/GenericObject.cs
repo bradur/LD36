@@ -23,7 +23,7 @@ public class GenericObject : MonoBehaviour
 
     SingleTile currentTile;
 
-    public void Init(int xPos, int yPos, int zPos, ObjectType objectType, PropertyDict properties)
+    public void Init(int xPos, float yPos, int zPos, ObjectType objectType, PropertyDict properties)
     {
         this.objectType = objectType;
         this.xPos = xPos;
@@ -72,6 +72,24 @@ public class GenericObject : MonoBehaviour
             }
         }
         return false;
+    }
+
+    bool fallCheckDone = false;
+    float timer = 0f;
+    float timeToFall = 0.25f;
+
+    void Update()
+    {
+        if (falling && !fallCheckDone)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeToFall)
+            {
+                SoundManager.main.PlaySound(SoundClip.BlockFall);
+                timer = 0f;
+                fallCheckDone = true;
+            }
+        }
     }
 
     public void MakeUnMovable()

@@ -199,7 +199,8 @@ public class GameManager : MonoBehaviour
                 {
                     GenericObject genericObject = Instantiate(objectPrefabs[objectType]);
                     genericObject.transform.parent = world.transform;
-                    genericObject.Init((int)tmxObject.X / tileSize, (int)objectPrefabs[objectType].transform.position.y, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
+                    Debug.Log(objectType + ": " + (int)objectPrefabs[objectType].transform.position.y);
+                    genericObject.Init((int)tmxObject.X / tileSize, objectPrefabs[objectType].transform.position.y, map.Height - (int)tmxObject.Y / tileSize, (ObjectType)objectType, tmxObject.Properties);
                 }
             }
         }

@@ -56,12 +56,14 @@ public class Projectile : MonoBehaviour
         if(singleTile.TileObject != null && singleTile.TileObject.ObjectType == ObjectType.MovableBlock)
         {
             Debug.Log("Projectile killed by check!");
+            SoundManager.main.PlaySound(SoundClip.ArrowHit);
             Destroy(gameObject);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        SoundManager.main.PlaySound(SoundClip.ArrowHit);
         Destroy(gameObject);
     }
 }

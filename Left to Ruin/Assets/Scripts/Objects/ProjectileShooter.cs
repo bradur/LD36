@@ -51,6 +51,7 @@ public class ProjectileShooter : MonoBehaviour {
 
     public void Shoot()
     {
+        SoundManager.main.PlaySound(SoundClip.ArrowShoot);
         Projectile newProjectile = Instantiate(projectilePrefab);
         newProjectile.transform.parent = GameManager.main.ProjectileContainer;
         newProjectile.transform.position = transform.position + (transform.forward);

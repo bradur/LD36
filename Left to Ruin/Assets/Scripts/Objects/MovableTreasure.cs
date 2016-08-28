@@ -31,6 +31,7 @@ public class MovableTreasure : MonoBehaviour {
 
     void Break()
     {
+        SoundManager.main.PlaySound(SoundClip.TreasureBreak);
         Destroy(outerShell);
         GenericObject genericObject = GetComponent<GenericObject>(); 
         genericObject.MakeUnMovable();
