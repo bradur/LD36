@@ -47,6 +47,13 @@ public class UIManager : MonoBehaviour
     private Sprite[] itemImages;
     private List<InventoryItem> items = new List<InventoryItem>();
 
+    [SerializeField]
+    private Text txtMute;
+    [SerializeField]
+    private Image imgMuted;
+    [SerializeField]
+    private Image imgNotMuted;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -59,6 +66,21 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void ToggleMute(bool muted)
+    {
+        if (muted)
+        {
+            txtMute.text = "Sound OFF (M)";
+            imgMuted.enabled = true;
+            imgNotMuted.enabled = false;
+        } else
+        {
+            imgMuted.enabled = false;
+            imgNotMuted.enabled = true;
+            txtMute.text = "Sound ON (M)";
         }
     }
 

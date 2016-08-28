@@ -22,19 +22,27 @@ public enum SoundClip
     UnlockDoor
 }
 
-public class SoundManager : MonoBehaviour {
+public class SoundManager : MonoBehaviour
+{
 
     [SerializeField]
     private AudioSource[] sounds;
 
     public static SoundManager main;
 
+    [SerializeField]
+    private AudioSource musicTheme;
+    bool muted = false;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
         if (GameObject.FindGameObjectsWithTag("SoundManager").Length < 1)
         {
             gameObject.tag = "SoundManager";
+            if (!muted)
+            {
+                musicTheme.Play();
+            }
             main = this;
         }
         else
@@ -43,8 +51,34 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            ToggleMute();
+            UIManager.main.ToggleMute(muted);
+        }
+    }
+
+    public void ToggleMute()
+    {
+        muted = !muted;
+        if(muted == true)
+        {
+            AudioListener.volume = 0f;
+            musicTheme.Pause();
+        } else
+        {
+            AudioListener.volume = 1f;
+            musicTheme.UnPause();
+        }
+    }
+
     public void PlaySound(SoundClip soundClip)
     {
-        sounds[(int)soundClip].Play();
+        if (!muted)
+        {
+            sounds[(int)soundClip].Play();
+        }
     }
 }
