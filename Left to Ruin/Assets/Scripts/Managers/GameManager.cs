@@ -58,11 +58,13 @@ public class GameManager : MonoBehaviour
     public void RemoveItem(Item item)
     {
         items.Remove(item);
+        UIManager.main.RemoveItem(item);
     }
 
     public void GainItem(Item item)
     {
         items.Add(item);
+        UIManager.main.AddItem(item);
     }
 
     void Awake()
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        UIManager.main.ClearItems();
         UIManager.main.ClearDialogs();
         Time.timeScale = 1f;
         SceneManager.LoadScene("game");
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void FinishLevel()
     {
         UIManager.main.ClearDialogs();
+        UIManager.main.ClearItems();
         currentLevel++;
         if (currentLevel > levels.Count - 1)
         {

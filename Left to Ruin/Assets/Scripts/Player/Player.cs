@@ -70,18 +70,26 @@ public class Player : MonoBehaviour
                             return false;
                         }
                     }
-                    else if (tileObject.ObjectType == ObjectType.MovableTreasure)
+                    else if (
+                        tileObject.ObjectType == ObjectType.MovableTreasureRed ||
+                        tileObject.ObjectType == ObjectType.MovableTreasureBlue ||
+                        tileObject.ObjectType == ObjectType.MovableTreasureGreen
+                    )
                     {
                         GameManager.main.GainItem(tileObject.GetComponent<MovableTreasure>().GetItem());
                         tileObject.RemoveFromTile();
                         Destroy(tileObject.gameObject);
                     }
-                    else if (tileObject.ObjectType == ObjectType.LockedDoor)
+                    else if (
+                        tileObject.ObjectType == ObjectType.LockedDoorRed ||
+                        tileObject.ObjectType == ObjectType.LockedDoorGreen ||
+                        tileObject.ObjectType == ObjectType.LockedDoorBlue)
                     {
                         if (!tileObject.GetComponent<LockedDoor>().UnlockDoor(GameManager.main.Items))
                         {
                             return false;
                         }
+                        tileObject.RemoveFromTile();
                     } else if(tileObject.ObjectType == ObjectType.ProjectileShooter)
                     {
                         return false;
@@ -111,7 +119,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Projectile")
         {
             Die();

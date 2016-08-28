@@ -27,7 +27,7 @@ public class LockedDoor : MonoBehaviour
             if (items[i] == requiredItem)
             {
                 GameManager.main.RemoveItem(items[i]);
-                Destroy(door);
+                Destroy(gameObject);
                 return true;
             }
         }

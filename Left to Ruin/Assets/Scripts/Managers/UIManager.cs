@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum DialogAction
 {
@@ -33,6 +34,17 @@ public class UIManager : MonoBehaviour
     private GameObject currentDialog = null;
 
     public static UIManager main;
+    [SerializeField]
+    private InventoryItem inventoryItemPrefab;
+
+    [SerializeField]
+    private Transform inventoryItemParent;
+
+    [SerializeField]
+    private string[] itemNames;
+    [SerializeField]
+    private Sprite[] itemImages;
+    private List<InventoryItem> items = new List<InventoryItem>();
 
     void Awake()
     {
@@ -74,6 +86,37 @@ public class UIManager : MonoBehaviour
             newDialog.Init(title, text, dialogAction, dismissMessage);
             currentDialog = newDialog.gameObject;
         }
+    }
+
+    public void AddItem(Item item)
+    {
+        InventoryItem inventoryItem = Instantiate(inventoryItemPrefab);
+        inventoryItem.transform.SetParent(inventoryItemParent, false);
+        inventoryItem.Init(item, itemNames[(int)item], itemImages[(int)item], items.Count);
+        items.Add(inventoryItem);
+    }
+
+    public void RemoveItem(Item item)
+    {
+        foreach(InventoryItem inventoryItem in items)
+        {
+            if(inventoryItem.Item == item)
+            {
+                items.Remove(inventoryItem);
+                Destroy(inventoryItem.gameObject);
+                break;
+            }
+        }
+        for(int i = 0; i < items.Count; i++)
+        {
+            items[i].UpdatePosition(i);
+        }
+    }
+
+    public void ClearItems()
+    {
+        items.Clear();
+        items = new List<InventoryItem>();
     }
 
     public void DestroyDialog(GameObject dialog)
