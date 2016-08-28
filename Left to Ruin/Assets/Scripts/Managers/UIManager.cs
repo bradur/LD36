@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public enum DialogAction
 {
@@ -87,6 +88,8 @@ public class UIManager : MonoBehaviour
     public void OpenMainMenu()
     {
         dialogIsActive = false;
+        SceneManager.LoadScene("menu");
+        Destroy(gameObject);
     }
 
     void Update()

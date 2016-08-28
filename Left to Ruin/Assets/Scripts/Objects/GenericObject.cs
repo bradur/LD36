@@ -36,6 +36,9 @@ public class GenericObject : MonoBehaviour
 
             ProjectileShooter projectileShooter = GetComponent<ProjectileShooter>();
             projectileShooter.Init((ProjectileHeading)GameManager.IntParseFast(properties["ObjectRotation"]));
+        } else if (properties.ContainsKey("ObjectRotation"))
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, GameManager.Rotations[GameManager.IntParseFast(properties["ObjectRotation"])], transform.eulerAngles.z);
         }
         transform.position = new Vector3(xPos, yPos, zPos);
         currentTile = TileManager.main.GetTile(xPos, zPos);

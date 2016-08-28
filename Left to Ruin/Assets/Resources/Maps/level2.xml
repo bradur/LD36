@@ -7561,6 +7561,7 @@
   </object>
   <object id="29" gid="15" x="1472" y="1472" width="64" height="64">
    <properties>
+    <property name="ObjectRotation" type="int" value="2"/>
     <property name="ObjectType" type="int" value="4"/>
    </properties>
   </object>

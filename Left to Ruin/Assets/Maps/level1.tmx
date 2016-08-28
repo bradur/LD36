@@ -6,7 +6,7 @@
  <tileset firstgid="1" name="Floor" tilewidth="64" tileheight="64" tilecount="16" columns="4">
   <image source="../Images/tilesheet.png" width="256" height="256"/>
  </tileset>
- <layer name="Bottom" width="50" height="50">
+ <layer name="Bottom" width="50" height="50" visible="0">
   <properties>
    <property name="TileType" type="int" value="4"/>
   </properties>

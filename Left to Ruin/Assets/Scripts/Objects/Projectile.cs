@@ -61,6 +61,12 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    void OnCollisionStay(Collision collision)
+    {
+        SoundManager.main.PlaySound(SoundClip.ArrowHit);
+        Destroy(gameObject);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         SoundManager.main.PlaySound(SoundClip.ArrowHit);

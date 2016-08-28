@@ -132,16 +132,24 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("game");
     }
 
-    void Start()
+    /*void Start()
     {
         LoadLevel(levels[currentLevel]);
-    }
+    }*/
 
     void OnLevelWasLoaded(int level)
     {
-        if(main == this) { 
+        Debug.Log("LEVEL LOADED: " + level);
+        if (level == 0)
+        {
+            Time.timeScale = 1f;
+            Destroy(gameObject);
+        }
+        else if (main == this) {
+            
             LoadLevel(levels[currentLevel]);
         }
+
     }
 
     void LoadLevel(Level level)
