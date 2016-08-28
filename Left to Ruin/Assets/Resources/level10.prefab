@@ -41,6 +41,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapFile: {fileID: 4900000, guid: 3f1f3c1d8790ac0428ad0785b9cc3ac4, type: 3}
   mapMaterial: {fileID: 2100000, guid: 1261d00f901fc3744a4393a1e2e59e7b, type: 2}
+  levelEndDescription: The stones here are left in strange, yet useful formations.
+    If I didn't know better, I'd say someone was making a fool of me!
+  levelEndDate: 6th of July, 1875
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -52,6 +55,15 @@ Prefab:
       propertyPath: mapFile
       value: 
       objectReference: {fileID: 4900000, guid: 3f1f3c1d8790ac0428ad0785b9cc3ac4, type: 3}
+    - target: {fileID: 0}
+      propertyPath: levelEndDescription
+      value: The stones here are left in strange, yet useful formations. If I didn't
+        know better, I'd say someone was making a fool of me!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: levelEndDate
+      value: 6th of July, 1875
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194854}

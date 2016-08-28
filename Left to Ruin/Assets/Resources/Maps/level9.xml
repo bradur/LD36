@@ -10067,17 +10067,7 @@
     <property name="ObjectType" type="int" value="1"/>
    </properties>
   </object>
-  <object id="46" gid="8" x="1280" y="1664" width="64" height="64">
-   <properties>
-    <property name="ObjectType" type="int" value="1"/>
-   </properties>
-  </object>
   <object id="47" gid="8" x="1280" y="1600" width="64" height="64">
-   <properties>
-    <property name="ObjectType" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="48" gid="8" x="1280" y="1536" width="64" height="64">
    <properties>
     <property name="ObjectType" type="int" value="1"/>
    </properties>
@@ -10094,6 +10084,7 @@
   </object>
   <object id="52" gid="8" x="1088" y="1792" width="64" height="64">
    <properties>
+    <property name="ObjectRotation" type="int" value="2"/>
     <property name="ObjectType" type="int" value="9"/>
    </properties>
   </object>
@@ -10127,6 +10118,7 @@
   </object>
   <object id="62" gid="8" x="960" y="1792" width="64" height="64">
    <properties>
+    <property name="ObjectRotation" type="int" value="4"/>
     <property name="ObjectType" type="int" value="9"/>
    </properties>
   </object>

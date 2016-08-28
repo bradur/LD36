@@ -16,4 +16,13 @@ public class Level : MonoBehaviour
     private Material mapMaterial;
     public Material MapMaterial { get { return mapMaterial; } }
 
+    [SerializeField]
+    [TextArea]
+    private string levelEndDescription;
+    public string LevelEndDescription { get { return levelEndDescription; } }
+
+    [SerializeField]
+    private string levelEndDate;
+    public string LevelEndDate { get { return levelEndDate; } }
+
 }

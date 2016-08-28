@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
     public Player Player { get { return player; } }
 
     [SerializeField]
-    private int currentLevel = 0;
+    private int currentLevelNumber = 0;
+
+    private Level currentLevel;
+    public Level CurrentLevel { get { return currentLevel; } }
 
     private static int[] rotations = new int[] {
         -1, // None
@@ -88,15 +91,16 @@ public class GameManager : MonoBehaviour
         UIManager.main.ClearDialogs();
         Time.timeScale = 1f;
         SceneManager.LoadScene("game");
-        LoadLevel(levels[currentLevel]);
+        LoadLevel(levels[currentLevelNumber]);
     }
 
     public void FinishLevel()
     {
         UIManager.main.ClearDialogs();
         UIManager.main.ClearItems();
-        currentLevel++;
-        if (currentLevel > levels.Count - 1)
+        currentLevelNumber++;
+        
+        if (currentLevelNumber > levels.Count - 1)
         {
             UIManager.main.AddDialog(
                 "21st of December, 1879",
@@ -104,11 +108,11 @@ public class GameManager : MonoBehaviour
                 DialogAction.GameFinished,
                 ""
             );
-            currentLevel--;
-        } else { 
+            currentLevelNumber--;
+        } else {
             UIManager.main.AddDialog(
-                "3rd of October, 1876",
-                "This strange stone pulses under my touch. I shall take it with me and find my way deeper into the ruins.",
+                levels[currentLevelNumber-1].LevelEndDate,
+                levels[currentLevelNumber-1].LevelEndDescription,
                 DialogAction.NextLevel,
                 ""
             );
@@ -118,7 +122,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         UIManager.main.AddDialog(
-            "2nd of September, 1877",
+            levels[currentLevelNumber].LevelEndDate,
             "I go to my death with a restless mind - there is still so much I don't know about this place!",
             DialogAction.Restart,
             ""
@@ -147,13 +151,14 @@ public class GameManager : MonoBehaviour
         }
         else if (main == this) {
             
-            LoadLevel(levels[currentLevel]);
+            LoadLevel(levels[currentLevelNumber]);
         }
 
     }
 
     void LoadLevel(Level level)
     {
+        currentLevel = level;
         Time.timeScale = 0f;
         world = GameObject.FindGameObjectWithTag("World").GetComponent<WorldManager>();
         float yInterval = -3f;
@@ -177,6 +182,7 @@ public class GameManager : MonoBehaviour
                         }
                         GameObject wallBlock = (GameObject)Instantiate(wallBlockPrefab, new Vector3(x, wallBlockPrefab.transform.position.y, z), Quaternion.identity);
                         wallBlock.transform.SetParent(world.WallContainer, false);
+                        wallBlock.gameObject.isStatic = true;
                     }
                 }
             }

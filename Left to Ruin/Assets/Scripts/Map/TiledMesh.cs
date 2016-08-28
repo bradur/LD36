@@ -54,6 +54,7 @@ public class TiledMesh : MonoBehaviour
         InitMesh(width, height);
         DrawMesh(width, height, layer);
         UpdateMesh();
+        gameObject.isStatic = true;
     }
 
     // calculates UV coordinates for each tile
@@ -106,7 +107,6 @@ public class TiledMesh : MonoBehaviour
                 AssignUv(index, tiles[tileId], tileSize);
                 index += 6;
                 TileManager.main.AddTile(x, z, tileType);
-
             }
 
         }

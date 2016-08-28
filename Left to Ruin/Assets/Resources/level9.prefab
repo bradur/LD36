@@ -41,6 +41,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapFile: {fileID: 4900000, guid: 88af5ecc698513642be515f3f1a85b7c, type: 3}
   mapMaterial: {fileID: 2100000, guid: 1261d00f901fc3744a4393a1e2e59e7b, type: 2}
+  levelEndDescription: I have reached end.
+  levelEndDate: 1st of August, 1875
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -52,6 +54,14 @@ Prefab:
       propertyPath: mapFile
       value: 
       objectReference: {fileID: 4900000, guid: 88af5ecc698513642be515f3f1a85b7c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: levelEndDescription
+      value: I have reached end.
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: levelEndDate
+      value: 1st of August, 1875
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194854}

@@ -96,12 +96,21 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            Debug.Log("Escape!");
-            AddDialog("8th of August, 1877", "I feel I can go no longer. It is time for me to rest.", DialogAction.MainMenu, "BACK TO GAME (ESC)");
+            AddDialog(
+                GameManager.main.CurrentLevel.LevelEndDate,
+                "I feel I can go no longer. It is time for me to rest.",
+                DialogAction.MainMenu,
+                "BACK TO GAME (ESC)"
+            );
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
-            AddDialog("14th of July, 1876", "I have made a grave mistake. If only it was possible to trace back my steps and do it all over again!", DialogAction.Retry, "BACK TO GAME (ESC)");
+            AddDialog(
+                GameManager.main.CurrentLevel.LevelEndDate,
+                "I have made a grave mistake. If only it was possible to trace back my steps and do it all over again!",
+                DialogAction.Retry,
+                "BACK TO GAME (ESC)"
+            );
         }
     }
 

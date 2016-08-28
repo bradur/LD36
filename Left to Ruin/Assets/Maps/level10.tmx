@@ -6,7 +6,7 @@
  <tileset firstgid="1" name="Floor" tilewidth="64" tileheight="64" tilecount="16" columns="4">
   <image source="../Images/tilesheet.png" width="256" height="256"/>
  </tileset>
- <layer name="Bottom" width="50" height="50" visible="0">
+ <layer name="Bottom" width="50" height="50">
   <properties>
    <property name="TileType" type="int" value="4"/>
   </properties>
@@ -8961,11 +8961,11 @@
    <tile gid="7"/>
    <tile gid="7"/>
    <tile gid="7"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="7"/>
+   <tile gid="7"/>
+   <tile gid="7"/>
+   <tile gid="7"/>
+   <tile gid="7"/>
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10052,6 +10052,7 @@
   </object>
   <object id="20" gid="3" x="1792" y="1600" width="64" height="64">
    <properties>
+    <property name="ObjectRotation" type="int" value="2"/>
     <property name="ObjectType" type="int" value="4"/>
    </properties>
   </object>
