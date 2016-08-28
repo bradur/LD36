@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private Player player;
     public Player Player { get { return player; } }
 
+    [SerializeField]
     private int currentLevel = 0;
 
     private static int[] rotations = new int[] {
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
                 DialogAction.GameFinished,
                 ""
             );
+            currentLevel--;
         } else { 
             UIManager.main.AddDialog(
                 "3rd of October, 1876",

@@ -27,6 +27,8 @@ public class GenericDialog : MonoBehaviour
     private GameObject nextLevelButton;
     [SerializeField]
     private GameObject restartLevelButton;
+    [SerializeField]
+    private GameObject retryButton;
 
     DialogAction currentAction;
 
@@ -40,6 +42,7 @@ public class GenericDialog : MonoBehaviour
         exitToMainMenuButton.SetActive(false);
         nextLevelButton.SetActive(false);
         restartLevelButton.SetActive(false);
+        retryButton.SetActive(false);
         if (dialogAction == DialogAction.MainMenu)
         {
             exitToMainMenuButton.SetActive(true);
@@ -60,6 +63,9 @@ public class GenericDialog : MonoBehaviour
             exitToMainMenuButton.SetActive(true);
             dismissButton.SetActive(false);
             restartLevelButton.SetActive(true);
+        } else if(dialogAction == DialogAction.Retry)
+        {
+            retryButton.SetActive(true);
         }
         animator.SetTrigger("Show");
         Time.timeScale = 0f;
@@ -122,6 +128,17 @@ public class GenericDialog : MonoBehaviour
                 else if (Input.GetKeyUp(KeyCode.Space))
                 {
                     GoToMainMenu();
+                }
+            }
+            else if (currentAction == DialogAction.Retry)
+            {
+                if (Input.GetKeyUp(KeyCode.R))
+                {
+                    RestartLevel();
+                }
+                else if (Input.GetKeyUp(KeyCode.Escape))
+                {
+                    Dismiss();
                 }
             }
         }
