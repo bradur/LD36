@@ -21,10 +21,13 @@ public class GenericObject : MonoBehaviour
     private bool movable = false;
     public bool Movable { get { return movable; } }
 
+    private Quaternion originalRotation;
+
     SingleTile currentTile;
 
     public void Init(int xPos, float yPos, int zPos, ObjectType objectType, PropertyDict properties)
     {
+        originalRotation = transform.rotation;
         this.objectType = objectType;
         this.xPos = xPos;
         this.zPos = zPos;
@@ -61,6 +64,7 @@ public class GenericObject : MonoBehaviour
                 if (tile.TileType == TileType.Hole)
                 {
                     falling = true;
+                    transform.rotation = originalRotation;
                 }
                 tile.AddObject(this);
                 currentTile.RemoveObject();
@@ -111,9 +115,13 @@ public class GenericObject : MonoBehaviour
         if (collision.gameObject.tag == "Hole")
         {
             gameObject.layer = LayerMask.GetMask("Default");
-            currentTile.RemoveObject();
+            if (currentTile != null)
+            {
+                currentTile.RemoveObject();
+            }
             falling = false;
             currentTile = null;
+            transform.rotation = originalRotation;
         }
         else if (collision.gameObject.tag == "MovableBlock")
         {

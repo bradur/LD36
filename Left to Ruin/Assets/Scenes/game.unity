@@ -290,12 +290,14 @@ MonoBehaviour:
   levels:
   - {fileID: 11402674, guid: 9fb7fd96d4b8579469679179f876c9b7, type: 2}
   - {fileID: 11402674, guid: a5df0a2ffebb9c54ab0cddba84ff1415, type: 2}
-  - {fileID: 11402674, guid: 20caaabb22b123e4eac9577a1aff375c, type: 2}
+  - {fileID: 11402674, guid: 155c3b3f75d075748b95d00d2a2fbd58, type: 2}
   - {fileID: 11402674, guid: c97daadc31f92b24ea2f8848df19bf31, type: 2}
   - {fileID: 11402674, guid: 3970d3acef74ed44ea2e2b5c6dbf790e, type: 2}
   - {fileID: 11402674, guid: a9e30c6bcb66b8844b456e95bd618e96, type: 2}
+  - {fileID: 11402674, guid: 20caaabb22b123e4eac9577a1aff375c, type: 2}
   - {fileID: 11402674, guid: 26ea6d4caafcf0f4da9cb4f6145e9ebb, type: 2}
   - {fileID: 11402674, guid: 9bf614071f74cd943ac8ae544c654897, type: 2}
+  - {fileID: 11402674, guid: b344ea8e5181fec41accafb45124d78b, type: 2}
   wallBlockPrefab: {fileID: 171582, guid: 7daab8b0889d4f24ab5329d43d088932, type: 2}
   playerPrefab: {fileID: 11468336, guid: 369ef25a8a74d7e40b4869c843c4fb6c, type: 2}
   currentLevel: 0
@@ -310,6 +312,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1324430315}
   - 222: {fileID: 135696227}
+  - 114: {fileID: 135696228}
   m_Layer: 5
   m_Name: ToggleMute
   m_TagString: Untagged
@@ -324,6 +327,58 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 135696226}
+--- !u!114 &135696228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135696226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1765232097}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1854983640}
+        m_MethodName: ToggleMute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &151477217
 GameObject:
   m_ObjectHideFlags: 0

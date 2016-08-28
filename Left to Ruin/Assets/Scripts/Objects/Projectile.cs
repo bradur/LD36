@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
     private ProjectileHeading projectileHeading = ProjectileHeading.North;
 
     float initialCheck = 0.5f;
-    float checkInterval = 0.25f;
+    float checkInterval = 0.15f;
     float timer = 0f;
     bool firstCheck = true;
 

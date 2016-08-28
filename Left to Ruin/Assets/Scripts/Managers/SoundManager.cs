@@ -56,7 +56,6 @@ public class SoundManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.M))
         {
             ToggleMute();
-            UIManager.main.ToggleMute(muted);
         }
     }
 
@@ -72,6 +71,7 @@ public class SoundManager : MonoBehaviour
             AudioListener.volume = 1f;
             musicTheme.UnPause();
         }
+        UIManager.main.ToggleMute(muted);
     }
 
     public void PlaySound(SoundClip soundClip)
