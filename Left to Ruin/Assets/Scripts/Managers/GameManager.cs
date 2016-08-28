@@ -173,6 +173,10 @@ public class GameManager : MonoBehaviour
                 tiledMesh.transform.position = new Vector3(tiledMesh.transform.position.x, tiledMesh.transform.position.y + yInterval, tiledMesh.transform.position.z);
                 tiledMesh.gameObject.tag = "Hole";
             }
+            if (tileType == TileType.Bottom)
+            {
+                tiledMesh.transform.position = new Vector3(tiledMesh.transform.position.x, tiledMesh.transform.position.y + yInterval, tiledMesh.transform.position.z);
+            }
             tiledMesh.transform.parent = world.transform;
             tiledMesh.Init(map.Width, map.Height, layer, level.MapMaterial);
         }

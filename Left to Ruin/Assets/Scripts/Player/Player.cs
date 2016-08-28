@@ -91,7 +91,6 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-
             if (tile.TileType == TileType.Hole)
             {
                 falling = true;

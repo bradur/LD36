@@ -28,8 +28,11 @@ public class GenericDialog : MonoBehaviour
     [SerializeField]
     private GameObject restartLevelButton;
 
+    DialogAction currentAction;
+
     public void Init(string title, string message, DialogAction dialogAction, string dismissMessage)
     {
+        currentAction = dialogAction;
         txtTitle.text = title;
         txtMessage.text = '"' + message + '"';
         dismissButton.SetActive(true);
@@ -51,7 +54,8 @@ public class GenericDialog : MonoBehaviour
             dismissButton.SetActive(false);
             exitToMainMenuButton.SetActive(true);
             restartLevelButton.SetActive(true);
-        } else if(dialogAction == DialogAction.GameFinished)
+        }
+        else if (dialogAction == DialogAction.GameFinished)
         {
             exitToMainMenuButton.SetActive(true);
             dismissButton.SetActive(false);
@@ -63,6 +67,7 @@ public class GenericDialog : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        Debug.Log("MainMenu");
         UIManager.main.OpenMainMenu();
     }
 
@@ -87,5 +92,38 @@ public class GenericDialog : MonoBehaviour
         animator.ResetTrigger("Hide");
         animator.ResetTrigger("Show");
         UIManager.main.DestroyDialog(gameObject);
+    }
+
+    void Update()
+    {
+        if (Time.timeScale == 0)
+        {
+            if (currentAction == DialogAction.MainMenu)
+            {
+                if (Input.GetKeyUp(KeyCode.Escape))
+                {
+                    Dismiss();
+                }
+                else if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    GoToMainMenu();
+                }
+            }
+            else if (currentAction == DialogAction.NextLevel && Input.GetKeyUp(KeyCode.Space))
+            {
+                OpenNextLevel();
+            }
+            else if (currentAction == DialogAction.Restart || currentAction == DialogAction.GameFinished)
+            {
+                if (Input.GetKeyUp(KeyCode.R))
+                {
+                    RestartLevel();
+                }
+                else if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    GoToMainMenu();
+                }
+            }
+        }
     }
 }

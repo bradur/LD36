@@ -9,7 +9,8 @@ public enum TileType {
     None,
     Floor,
     Wall,
-    Hole
+    Hole,
+    Bottom
 };
 
 public enum ObjectType
