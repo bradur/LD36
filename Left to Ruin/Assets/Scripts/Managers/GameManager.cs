@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        UIManager.main.ClearDialogs();
         Time.timeScale = 1f;
         SceneManager.LoadScene("game");
         LoadLevel(levels[currentLevel]);
@@ -88,12 +89,24 @@ public class GameManager : MonoBehaviour
 
     public void FinishLevel()
     {
-        UIManager.main.AddDialog(
-            "3rd of October, 1876",
-            "This strange stone pulses under my touch. I shall take it with me and find my way deeper into the ruins.",
-            DialogAction.NextLevel,
-            ""
-        );
+        UIManager.main.ClearDialogs();
+        currentLevel++;
+        if (currentLevel > levels.Count - 1)
+        {
+            UIManager.main.AddDialog(
+                "21st of December, 1879",
+                "I thought I was lost for sure. But by a magnificent stroke of luck I have succeeded! I will bring with me all these amazing findings and help the world!",
+                DialogAction.GameFinished,
+                ""
+            );
+        } else { 
+            UIManager.main.AddDialog(
+                "3rd of October, 1876",
+                "This strange stone pulses under my touch. I shall take it with me and find my way deeper into the ruins.",
+                DialogAction.NextLevel,
+                ""
+            );
+        }
     }
 
     public void GameOver()
@@ -109,21 +122,8 @@ public class GameManager : MonoBehaviour
     public void OpenNextLevel()
     {
         UIManager.main.ClearDialogs();
-        currentLevel++;
-        if (currentLevel > levels.Count - 1)
-        {
-            UIManager.main.AddDialog(
-                "21st of December, 1879",
-                "I thought I was lost for sure. But by a magnificent stroke of luck I have succeeded! I will bring with me all these amazing findings and help the world!",
-                DialogAction.GameFinished,
-                ""
-            );
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("game");
-        }
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("game");
     }
 
     void Start()

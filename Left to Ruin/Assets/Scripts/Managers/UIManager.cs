@@ -80,6 +80,7 @@ public class UIManager : MonoBehaviour
     {
         dialogIsActive = false;
         dialogPool.DestroyObject(dialog);
+        currentDialog = null;
     }
 
     public void ClearDialogs()
@@ -90,6 +91,7 @@ public class UIManager : MonoBehaviour
             {
                 dialogPool.DestroyObject(currentDialog);
                 currentDialog = null;
+                dialogIsActive = false;
             }
         }
     }

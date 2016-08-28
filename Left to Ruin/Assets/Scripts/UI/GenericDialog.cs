@@ -31,7 +31,7 @@ public class GenericDialog : MonoBehaviour
     public void Init(string title, string message, DialogAction dialogAction, string dismissMessage)
     {
         txtTitle.text = title;
-        txtMessage.text = message;
+        txtMessage.text = '"' + message + '"';
         dismissButton.SetActive(true);
         txtDismissButton.text = dismissMessage;
         exitToMainMenuButton.SetActive(false);
