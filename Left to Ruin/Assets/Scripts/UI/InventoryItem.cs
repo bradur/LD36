@@ -12,6 +12,10 @@ public class InventoryItem : MonoBehaviour {
 
     [SerializeField]
     private Image imgItem;
+
+    [SerializeField]
+    private Color[] itemColors;
+
     [SerializeField]
     RectTransform rt;
 
@@ -27,6 +31,7 @@ public class InventoryItem : MonoBehaviour {
         imgItem.sprite = itemImage;
         txtItemName.text = itemName;
         UpdatePosition(count);
+        imgItem.color = itemColors[(int)item];
     }
 
     public void UpdatePosition(int pos)
